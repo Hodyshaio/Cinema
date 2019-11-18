@@ -27,7 +27,6 @@ class SearchBar  extends React.Component {
             <div className="ui segment">
                 <form className="ui form" onSubmit={this.onSubmitForm}>
                     <div className="ui fluid icon input">
-                        {/* <label>Moving Search.....</label> */}
                         <input type="text" value={this.state.term} onChange={this.onInputChange}
                          placeholder="Search for a movie"/>
                          <i className="circular search link icon"></i>
