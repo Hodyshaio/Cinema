@@ -6,7 +6,7 @@ const PopupDelete = props => {
     console.log("----popup delete-----");
     console.log("PopupDelete => props => ",props);
 
-    function deleteMovie(){
+    const deleteMovie = () => {
         console.log("deleteMovie");
         props.removeMovie(props.movies.filter(m => m.imdbID !== props.movie.imdbID));
         props.closeDeletePopup();
@@ -23,7 +23,7 @@ const PopupDelete = props => {
                     <div className="ui buttons" style={{float:'right'}}>
                         <input type="button" value='Cancle' onClick={() => props.closeDeletePopup()} className="ui button" />
                             <div className="or"></div>
-                        <input type="button" value='Delete' onClick={deleteMovie.bind(this)} className="ui positive button" />
+                        <input type="button" value='Delete' onClick={deleteMovie} className="ui positive button" />
                     </div>
                 </form> 
             </div>

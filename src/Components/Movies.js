@@ -13,8 +13,8 @@ const MOVIE_API_URL = 'https://www.omdbapi.com/?s=man&apikey=3f92a36e';
 const Movies = props => {
 
   // For pagination
-  const [ currentPage, setCurrentPage ] = useState(1);
-  const [ moviesPerPage ] = useState(6);
+  // const [ currentPage, setCurrentPage ] = useState(1);
+  // const [ moviesPerPage ] = useState(6);
 
   // For PopupAddMovie
   const [ showAddPopup, setShowAddPopup ] = useState(false);
@@ -45,39 +45,41 @@ const Movies = props => {
        })
   }
 
-  // 
-  function addMovie(event){
-    event.preventDefault();
-    console.log("Add Movie => ");
+  const showAddMovie = () => {
+    console.log("showAddMovie => ");
     showAddPopup ? setShowAddPopup(false) : setShowAddPopup(true);
   }
 
   // Get Current Movies
-  const indexOfLastMovie = currentPage * moviesPerPage;
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = props.movies.slice(indexOfFirstMovie,indexOfLastMovie);
+  // const indexOfLastMovie = currentPage * moviesPerPage;
+  // const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  // const currentMovies = props.movies.slice(indexOfFirstMovie,indexOfLastMovie);
 
   // Change Page
-  const paginate = (pageNumber) => {
-    console.log("paginate")
-    // fix it ------------------>
-    setCurrentPage(pageNumber);
-  }
+  // const paginate = (pageNumber) => {
+  //   console.log("paginate")
+  //   // fix it ------------------>
+  //   setCurrentPage(pageNumber);
+  // }
 
-  const showMovies = props.loading === true ? 
+   const showMovies = props.loading === true ? 
      (<img className="spinner" src={spinner} alt="Loading spinner" />)
-     : (currentMovies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
+     : (props.movies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
 
-  const addPopup = showAddPopup ? <PopupAddMovie closeAddMoviePopup={addMovie.bind(this)} /> : null;
+   const addPopup = showAddPopup ? <PopupAddMovie closeAddMoviePopup={showAddMovie} /> : null;
 
    return(
      <div>
          <div className="container ui" style={{marginTop:'20px'}}>
            <SearchBar send={onSubmit} />
              { showMovies }
-             <aside className="btnAside"><button onClick={addMovie.bind(this)} className="ui circular icon button teal btnAddMovie"><span><i className="plus icon"></i></span></button></aside>
+             <aside className="btnAside">
+               <button onClick={showAddMovie.bind(this)} className="ui circular icon button teal btnAddMovie">
+                 <span><i className="plus icon"></i></span>
+               </button>
+            </aside>
              { addPopup }
-             <Pagination moviesPerPage={moviesPerPage} totalMovies={currentMovies.length} paginate={paginate} />
+             {/* <Pagination moviesPerPage={moviesPerPage} totalMovies={currentMovies.length} paginate={paginate} /> */}
          </div>
          <div>
          {/* <Pagination moviesPerPage={moviesPerPage} totalMovies={props.movies} paginate={paginate} /> */}

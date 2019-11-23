@@ -45,11 +45,29 @@ export const reducer = (state = initialState, action) => {
             movies: action.payload
       };
       case "SAVE_MOVIE":
-          return {
-            ...state,
-            loading: false,
-            movies: action.payload
-          };
+        const movies = [ ...state.movies ]
+        for(let i = 0; i < movies.length; i++ ){//את מי לשנות 
+          if(movies[i].imdbID === state.selectedMovie.imdbID)
+            movies[i] = action.payload;
+        }
+        return {
+          ...state,
+          loading: false,
+          movies: movies
+        };
+      case "ADD_MOVIE":
+        // const movies = [ ...state.movies ];
+        // movies.push(action.payload);
+        // for(let i = 0; i < movies.length; i++ ){ 
+        //   if(movies[i].imdbID === state.selectedMovie.imdbID)
+        //     movies[i] = action.payload;
+        // }
+        return {
+          ...state,
+          loading: false,
+          movies: action.payload
+          //movies: movies
+        };
       default:
         return state;
     }
