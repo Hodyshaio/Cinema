@@ -40,9 +40,9 @@ export const reducer = (state = initialState, action) => {
       };
       case "DELETE_MOVIE_FROM_MOVIES":
         return {
-            ...state,
-            loading: false,
-            movies: action.payload
+          ...state,
+          loading: false,
+          movies: action.payload
       };
       case "SAVE_MOVIE":
         const movies = [ ...state.movies ]

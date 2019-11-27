@@ -1,50 +1,49 @@
 import React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { validationTitle, updateTitle, validationYear,validationUrlPoster } from './Validation';
 
 const PopupAddMovie = props => {
-    console.log("-------PopupAddMovie------");
-    console.log("PopupAddMovie => props => ",props);
 
-    const [ errorMessage, setErrorMessage ] = useState('');
+    const [ errorTitleMessage, setErrorTitleMessage ] = useState('');
+    const [ errorYearMessage, setErrorYearMessage ] = useState('');
+    const [ errorPosterMessage, setErrorPosterMessage ] = useState('');
 
     // Add new movie to the global movies
     const addNewMovie = () => {
-        console.log("addNewMovie");
-        console.log("props => ",props);
        
+        // Auto ID
         let ID = 'tt' + Math.random().toExponential().substr(2, 7);
-        console.log("valID => ",ID);
+
         let valTitle = document.getElementById("title").value;
         let valYear = document.getElementById("year").value;
         let valPoster = document.getElementById("poster").value;
 
-        const existingMovie = props.movies.filter(movie => movie.Title === valTitle && 
-            movie.imdbID !== ID)
-            console.log("existingMovie => ", existingMovie);
+        const errorTitle = validationTitle(valTitle,props.movies,ID)
+        const errorYear = validationYear(valYear);
+        const errorPoster = validationUrlPoster(valPoster);
 
-        if (!existingMovie) {
-            setErrorMessage('There is a movie of the same name, Please change the name of the movie!');
+        if (errorTitle || errorYear || errorPoster) {
+            setErrorTitleMessage(errorTitle);
+            setErrorYearMessage(errorYear);
+            setErrorPosterMessage(errorPoster);
             return;
         }
-
-        const movie = {
-            ...props.movie,
-            Title: valTitle,
+        else {
+            const movie = {
+            Title: updateTitle(valTitle),
             Year: valYear,
-            Poster: valPoster + '.jpg',
+            Poster: valPoster,
             imdbID: ID
+            }
+            
+            const movies = [ ...props.movies ];
+            movies.push(movie);
+            
+            props.addNewMovieToMovies(movies);
+            props.closeAddMoviePopup(); 
         }
-        
-        const movies = [ ...props.movies ];
-        movies.push(movie);
-        console.log("movies => ",movies);
-        
-        props.addNewMovieToMovies(movies);
-        props.closeAddMoviePopup(); 
     }
-
-    const showError = errorMessage ? <div className="message message-danger">{errorMessage}</div> : null;
 
     return (
         <div className="overlay">
@@ -54,17 +53,18 @@ const PopupAddMovie = props => {
                 <div className="field">
                     <label>Title</label>
                     <div className="field">
-                        <input type="text" id="title" name="movie[title]" pattern=""/>
-                        {/* pattern="[A-Za-z]+('[A-Za-z]+)?"  */}
-                        { showError }
+                        <input type="text" id="title" name="movie[title]" />
+                        { errorTitleMessage ? <div className="message message-danger">{ errorTitleMessage }</div> : null }
                     </div>
                     <label>Year</label>
                     <div className="field">
-                        <input type="text" id="year" name="movie[year]" pattern="\b(19\d{2}|20\d[1-9])\b"/>
+                        <input type="text" id="year" name="movie[year]" />
+                        { errorYearMessage ? <div className="message message-danger">{ errorYearMessage }</div> : null }
                     </div>
                     <label>Image</label>
                     <div className="field">
-                        <input type="text" id="poster" name="movie[img]" pattern="(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})"/>
+                        <input type="text" id="poster" name="movie[img]" />
+                        { errorPosterMessage ? <div className="message message-danger">{ errorPosterMessage }</div> : null }
                     </div>
                 </div> 
                 <div style={{float:'right'}} className="ui buttons">

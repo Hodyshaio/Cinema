@@ -13,8 +13,8 @@ const MOVIE_API_URL = 'https://www.omdbapi.com/?s=man&apikey=3f92a36e';
 const Movies = props => {
 
   // For pagination
-  // const [ currentPage, setCurrentPage ] = useState(1);
-  // const [ moviesPerPage ] = useState(6);
+  const [ currentPage, setCurrentPage ] = useState(1);
+  const [ moviesPerPage ] = useState(6);
 
   // For PopupAddMovie
   const [ showAddPopup, setShowAddPopup ] = useState(false);
@@ -23,7 +23,7 @@ const Movies = props => {
   useEffect(() => {
     props.searchMovieRequest();
     axois.get(MOVIE_API_URL)
-    .then(data => { console.log("App: data => ",data.data)
+    .then(data => { 
       props.searchMovieSuccess(data.data.Search);
     })
     .catch(error => {console.log("App: => opps! ",error.massege);})
@@ -34,37 +34,32 @@ const Movies = props => {
        props.searchMovieRequest();
        axois.get(`http://www.omdbapi.com/?apikey=3f92a36e&s=${term}`)
        .then(data => {
-         console.log("onSubmit => movie");
-         console.log("onSubmit => data=>",data); 
          if(data.data.Response === 'True')
             props.searchMovieSuccess(data.data.Search);
          else
             props.searchMovieFailure(data.data.Search);})
-        .catch(error => {
-         console.log("onSubmit => opps! ",error.massege);
-       })
+       .catch(error => {
+         console.log("onSubmit: => opps! ",error.massege);
+        })
   }
 
   const showAddMovie = () => {
-    console.log("showAddMovie => ");
     showAddPopup ? setShowAddPopup(false) : setShowAddPopup(true);
   }
 
   // Get Current Movies
-  // const indexOfLastMovie = currentPage * moviesPerPage;
-  // const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  // const currentMovies = props.movies.slice(indexOfFirstMovie,indexOfLastMovie);
+  const indexOfLastMovie = currentPage * moviesPerPage;
+  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
+  const currentMovies = props.movies.slice(indexOfFirstMovie,indexOfLastMovie);
 
   // Change Page
-  // const paginate = (pageNumber) => {
-  //   console.log("paginate")
-  //   // fix it ------------------>
-  //   setCurrentPage(pageNumber);
-  // }
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  }
 
    const showMovies = props.loading === true ? 
      (<img className="spinner" src={spinner} alt="Loading spinner" />)
-     : (props.movies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
+     : (currentMovies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
 
    const addPopup = showAddPopup ? <PopupAddMovie closeAddMoviePopup={showAddMovie} /> : null;
 
@@ -72,20 +67,19 @@ const Movies = props => {
      <div>
          <div className="container ui" style={{marginTop:'20px'}}>
            <SearchBar send={onSubmit} />
+           <div className="paging">
+              <Pagination moviesPerPage={moviesPerPage} totalMovies={props.movies.length} paginate={paginate} />
+           </div>
              { showMovies }
              <aside className="btnAside">
                <button onClick={showAddMovie.bind(this)} className="ui circular icon button teal btnAddMovie">
                  <span><i className="plus icon"></i></span>
                </button>
-            </aside>
-             { addPopup }
-             {/* <Pagination moviesPerPage={moviesPerPage} totalMovies={currentMovies.length} paginate={paginate} /> */}
-         </div>
-         <div>
-         {/* <Pagination moviesPerPage={moviesPerPage} totalMovies={props.movies} paginate={paginate} /> */}
+             </aside>
+              { addPopup }
          </div>
       </div>
-       );
+    );
 }
 
 // Injection of the global state into the component

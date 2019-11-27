@@ -1,31 +1,26 @@
 import React from 'react';
 
 const Pagination = props => {
-    console.log("Pagination => props => ",props);
+
     const pageNumbers = [];
 
-    for(let i = 1; i <= Math.ceil(props.totalMovies / props.moviesPerPage); i++) {
-        console.log("into the for => ",props)
+    for(let i = 1; i <= Math.ceil(props.totalMovies / props.moviesPerPage); i++){
         pageNumbers.push(i);
-        console.log("after the for => ",props)
     }
-    console.log("Pagination => I'm Here 1 => ",props);
+
     return (
-        console.log("Pagination => I'm Here 2 => ",props),
-        <nav className="ui pagination secondary menu">
-            <ul className="paginationI">
-            {console.log("Pagination => I'm Here 3 => ",props)}
-                { console.log("Pagination => I'm Here 4 => ",pageNumbers.length),
-                    pageNumbers.map(number => (
-                    console.log("into the pageNumbers"),
-                    <li key={number} className="item">
-                        {console.log("into the li")}
-                        <a onClick={() => props.paginate(number)} href="!#" className="item">{number}</a>
-                        {console.log("after the a")}
+        <nav aria-label="Page navigation example">
+            <ul className='pagination justify-content-end'>
+            <a className='page-link disabled'>&laquo;</a>
+                {pageNumbers.map(number => (
+                    <li key={number} className='page-item'>
+                        <a onClick={() => props.paginate(number)} href='!#' className='page-link'>
+                        {number}
+                        </a>
                     </li>
-                )) }
+                 ))}
+            <a className='page-link disabled'>&raquo;</a>
             </ul>
-            <div>1 2 3 </div>
         </nav>
     );
 }

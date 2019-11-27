@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { validationTitle } from './Validation'
 
 const Popup = props => {
     console.log("----popup-----");
@@ -9,26 +10,27 @@ const Popup = props => {
 
     // Save the data into global state after editing 
     const saveEdit = () => {
-        console.log("saveEdit");
 
         let valTitle = document.getElementById("title").value;
         let valYear = document.getElementById("year").value;
 
         // if no other movie is the same as the current movie
-        const existingMovie = props.movies.filter(movie => movie.Title === valTitle && 
-            movie.imdbID !== props.movie.imdbID)
-            console.log("existingMovie => ", existingMovie);
-        if (!existingMovie) {
-            setErrorMessage('There is a movie of the same name, Please change the name of the movie!');
+        const existingMovie = validationTitle(valTitle, props.movies,props.movie.imdbID)
+           
+        if (existingMovie) {
+            setErrorMessage(existingMovie);
             return;
         }
-        const movie = {
-            ...props.movie,
-            Title: valTitle,
-            Year: valYear
+        else{
+
+            const movie = {
+                ...props.movie,
+                Title: valTitle,
+                Year: valYear
+            }
+            props.saveMovie(movie);
+            props.closeEditPopup();
         }
-        props.saveMovie(movie);
-        props.closeEditPopup();
     }
 
     const showError = errorMessage ? <div className="message message-danger">{errorMessage}</div> : null;
@@ -38,7 +40,7 @@ return (
         <div className="popup">
             <form className="ui form">
                 <h4 className="ui dividing header">Movie Details</h4>
-                <img className="right floated small ui image" src={props.movie.Poster} />
+                <img src={props.movie.Poster} alt="poster of movie" className="right floated small ui image" />
                 <div className="field">
                     <label>Title</label>
                     <div className="field">
