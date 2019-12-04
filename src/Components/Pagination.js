@@ -13,7 +13,7 @@ const Pagination = props => {
             <ul className='pagination justify-content-center'>
                 {pageNumbers.map(number => (
                     <button key={number} className='ui circular olive button icon btnPagination'>
-                        <a onClick={() => props.paginate(number)} href='!#' className="page-a">
+                        <a onClick={() => props.paginate(number)}  className="page-a">
                         {number}
                         </a>
                     </button>
