@@ -1,27 +1,27 @@
 import React from 'react';
 import { useState } from 'react';
 import { connect } from 'react-redux';
-import { validationTitle, updateTitle, validationYear,validationUrlPoster } from './Validation';
+import { validationTitle, updateTitle, validationYear, validationUrlPoster } from './Validation';
 
 const PopupAddMovie = props => {
+
+    let valTitle = React.createRef();
+    let valYear = React.createRef();
+    let valPoster = React.createRef();
 
     const [ errorTitleMessage, setErrorTitleMessage ] = useState('');
     const [ errorYearMessage, setErrorYearMessage ] = useState('');
     const [ errorPosterMessage, setErrorPosterMessage ] = useState('');
 
-    // Add new movie to the global movies
+    // Add new movie to the global movies And to put out error messages, if any
     const addNewMovie = () => {
        
         // Auto ID
         let ID = 'tt' + Math.random().toExponential().substr(2, 7);
 
-        let valTitle = document.getElementById("title").value;
-        let valYear = document.getElementById("year").value;
-        let valPoster = document.getElementById("poster").value;
-
-        const errorTitle = validationTitle(valTitle,props.movies,ID)
-        const errorYear = validationYear(valYear);
-        const errorPoster = validationUrlPoster(valPoster);
+        const errorTitle = validationTitle(valTitle.current.value, props.movies,ID)
+        const errorYear = validationYear(valYear.current.value);
+        const errorPoster = validationUrlPoster(valPoster.current.value);
 
         if (errorTitle || errorYear || errorPoster) {
             setErrorTitleMessage(errorTitle);
@@ -31,9 +31,9 @@ const PopupAddMovie = props => {
         }
         else {
             const movie = {
-            Title: updateTitle(valTitle),
-            Year: valYear,
-            Poster: valPoster,
+            Title: updateTitle(valTitle.current.value),
+            Year: valYear.current.value,
+            Poster: valPoster.current.value,
             imdbID: ID
             }
             
@@ -53,17 +53,17 @@ const PopupAddMovie = props => {
                 <div className="field">
                     <label>Title</label>
                     <div className="field">
-                        <input type="text" id="title" name="movie[title]" />
+                        <input type="text" ref={valTitle} name="movie[title]" />
                         { errorTitleMessage ? <div className="message message-danger">{ errorTitleMessage }</div> : null }
                     </div>
                     <label>Year</label>
                     <div className="field">
-                        <input type="text" id="year" name="movie[year]" />
+                        <input type="text" ref={valYear} name="movie[year]" />
                         { errorYearMessage ? <div className="message message-danger">{ errorYearMessage }</div> : null }
                     </div>
                     <label>Image</label>
                     <div className="field">
-                        <input type="text" id="poster" name="movie[img]" />
+                        <input type="text" ref={valPoster} name="movie[img]" />
                         { errorPosterMessage ? <div className="message message-danger">{ errorPosterMessage }</div> : null }
                     </div>
                 </div> 

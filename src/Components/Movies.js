@@ -57,26 +57,26 @@ const Movies = props => {
     setCurrentPage(pageNumber);
   }
 
-   const showMovies = props.loading === true ? 
-     (<img className="spinner" src={spinner} alt="Loading spinner" />)
-     : (currentMovies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
+  const showMovies = props.loading === true ? 
+    (<img className="spinner" src={spinner} alt="Loading spinner" />)
+    : (currentMovies.map((movie,index) => { return (<MovieCard key={index} movie={movie} />)}))
 
-   const addPopup = showAddPopup ? <PopupAddMovie closeAddMoviePopup={showAddMovie} /> : null;
+  const addPopup = showAddPopup ? <PopupAddMovie closeAddMoviePopup={showAddMovie} /> : null;
 
    return(
      <div>
          <div className="container ui" style={{marginTop:'20px'}}>
            <SearchBar send={onSubmit} />
-           <div className="paging">
+           <div>
               <Pagination moviesPerPage={moviesPerPage} totalMovies={props.movies.length} paginate={paginate} />
            </div>
              { showMovies }
-             <aside className="btnAside">
-               <button onClick={showAddMovie.bind(this)} className="ui circular icon button teal btnAddMovie">
-                 <span><i className="plus icon"></i></span>
-               </button>
-             </aside>
-              { addPopup }
+           <aside className="btnAside">
+              <button onClick={showAddMovie} className="ui circular icon button olive btnAddMovie">
+                <span><i className="plus icon"></i></span>
+              </button>
+           </aside>
+             { addPopup }
          </div>
       </div>
     );
@@ -107,4 +107,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Movies);
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

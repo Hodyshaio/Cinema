@@ -10,16 +10,14 @@ const Pagination = props => {
 
     return (
         <nav aria-label="Page navigation example">
-            <ul className='pagination justify-content-end'>
-            <a className='page-link disabled'>&laquo;</a>
+            <ul className='pagination justify-content-center'>
                 {pageNumbers.map(number => (
-                    <li key={number} className='page-item'>
-                        <a onClick={() => props.paginate(number)} href='!#' className='page-link'>
+                    <button key={number} className='ui circular olive button icon btnPagination'>
+                        <a onClick={() => props.paginate(number)} href='!#' className="page-a">
                         {number}
                         </a>
-                    </li>
-                 ))}
-            <a className='page-link disabled'>&raquo;</a>
+                    </button>
+                ))}
             </ul>
         </nav>
     );

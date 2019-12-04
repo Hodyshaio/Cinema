@@ -1,4 +1,3 @@
-import React from 'react';
 
 export const validationTitle = (title, movies, id) => {
     if (!title) {
@@ -29,8 +28,8 @@ export const validationYear = (year) => {
     if (!year) {
         return "Required!";
     }
-    if (!/\b(19\d{2}|20\d[1-9])\b/.test(year))
-        return "Please enter a year between 1990 - This year!";
+    if (!/\b(19\d{2}|20\d{2})\b/.test(year))
+        return "Please enter a year between 1900 - This year!";
 }
 
 export const validationUrlPoster = (urlPoster) => {

@@ -2,12 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 const PopupDelete = props => {
-    
-    console.log("----popup delete-----");
-    console.log("PopupDelete => props => ",props);
 
+    // Delete the movie from the global state
     const deleteMovie = () => {
-        console.log("deleteMovie");
         props.removeMovie(props.movies.filter(m => m.imdbID !== props.movie.imdbID));
         props.closeDeletePopup();
     }
@@ -47,4 +44,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(PopupDelete);
+export default connect(mapStateToProps, mapDispatchToProps)(PopupDelete);

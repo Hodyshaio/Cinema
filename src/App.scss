@@ -1,16 +1,16 @@
 
 /* Movies.js */
-.movies{
+.movies {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
 }
-.spinner{
+.spinner {
   height: 50px;
   width: 70px;
   margin: auto;
 }
-.btnAside{
+.btnAside {
   width:60px;
   height:60px;
   position:fixed;
@@ -19,23 +19,23 @@
   float:right;
   margin-right:auto;
 }
-.btnAddMovie{
-	 width: 60px;
-   height: 60px;
+.btnAddMovie { 
+	width: 60px;
+  height: 60px;
 }
-i{
+i {
 	margin-top: -2px;
 	width: 20px;
 	vertical-align: middle;
 }
 
 /* MovieCard.js */
-img.cover{
+img.cover {
   height: 300px; 
   width: 262px;
   background-size: cover;
 }
-.title{
+.title {
   padding-top: 10px;
   padding-bottom: 15px;
   font-size: 70px;
@@ -43,7 +43,7 @@ img.cover{
 }
 
 /* Popup.js */
-.overlay{
+.overlay {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   overflow: auto; /* Enable scroll if needed */
@@ -56,15 +56,14 @@ img.cover{
   justify-content: center;
   align-items: center; 
 }
-.overlay:target{
+.overlay:target {
   visibility: visible;
   opacity: 1;
 }
-.popup{
+.popup {
   margin: 70px auto;
   padding: 20px;
   background: rgb(250, 248, 248);
-  /* background: rgba(255,255,255,0.2); */
   border-radius: 5px;
   width: 50%;
   position: relative;
@@ -84,16 +83,13 @@ img.cover{
 }
 
  /* Pagination */
-.paging{
-  // margin-top: auto;
-  margin-left: auto;
-  align-items: center;
-  position: relative;
-  //justify-content: center;
-  //bottom: auto;
-  // right: 0;
-  //position: fixed;
-  //text-align: center;
+.page-a{
+  color: aliceblue;
+  text-align: center;
+}
+.btnPagination{
+  width:35px;
+  height:35px;
 }
 
 .App{
