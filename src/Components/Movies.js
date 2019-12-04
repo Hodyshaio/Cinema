@@ -23,7 +23,7 @@ const Movies = props => {
   useEffect(() => {
     props.searchMovieRequest();
     axois.get(MOVIE_API_URL)
-    .then(data => { console.log("data=> ",data)
+    .then(data => { 
       props.searchMovieSuccess(data.data.Search);
     })
     .catch(error => {console.log("opps! ",error.massege);})
