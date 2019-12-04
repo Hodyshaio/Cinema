@@ -26,20 +26,20 @@ const Movies = props => {
     .then(data => { 
       props.searchMovieSuccess(data.data.Search);
     })
-    .catch(error => {console.log("App: => opps! ",error.massege);})
+    .catch(error => {console.log("opps! ",error.massege);})
   },[]);
 
   // Request single movie
   const onSubmit = (term) => {
        props.searchMovieRequest();
-       axois.get(`http://www.omdbapi.com/?apikey=3f92a36e&s=${term}`)
+       axois.get(`https://www.omdbapi.com/?apikey=3f92a36e&s=${term}`)
        .then(data => {
          if(data.data.Response === 'True')
             props.searchMovieSuccess(data.data.Search);
          else
             props.searchMovieFailure(data.data.Search);})
        .catch(error => {
-         console.log("onSubmit: => opps! ",error.massege);
+         console.log("opps! ",error.massege);
         })
   }
 
