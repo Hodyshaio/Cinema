@@ -12,8 +12,8 @@ const Pagination = props => {
         <nav aria-label="Page navigation example">
             <ul className='pagination justify-content-center'>
                 {pageNumbers.map(number => (
-                    <button key={number} className='ui circular olive button icon btnPagination'>
-                        <a onClick={() => props.paginate(number)}  className="page-a">
+                    <button onClick={() => props.paginate(number)} key={number} className='ui circular olive button icon btnPagination'>
+                        <a href="!#" className="page-a">
                         {number}
                         </a>
                     </button>

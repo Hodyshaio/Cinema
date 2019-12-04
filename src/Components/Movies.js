@@ -53,9 +53,7 @@ const Movies = props => {
   const currentMovies = props.movies.slice(indexOfFirstMovie,indexOfLastMovie);
 
   // Change Page
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  }
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const showMovies = props.loading === true ? 
     (<img className="spinner" src={spinner} alt="Loading spinner" />)
