@@ -14,7 +14,7 @@ export const validationTitle = (title, movies, id) => {
 
 export const updateTitle = (term) => {
     const word = term.split('')
-        .filter(x => /[A-Za-z/-/ /0-9]/.test(x))
+        .filter(x => /[A-Za-z/\-/:/ /0-9]/.test(x))
         .join('')
         .toLowerCase()
         .split(' ')
